@@ -1,3 +1,4 @@
+import { clampWidgetRadius } from "@/lib/qa/design";
 import { titleTypographyClass, titleTypographyStyle } from "@/lib/title-typography";
 import { runCustomVisitEffect, normalizeVisitCustom } from "@/lib/visit-effect-custom";
 import { COMPONENT_SCOPES, glassSurfaceStyle, resolveComponentDesign, resolveScopedTokens, scopeOfBlockKind } from "@/lib/theme-engine";
@@ -219,9 +220,12 @@ export function ProfileView({
       : buttonStyle;
     // Button text colour lives under Typography, so it applies even without custom button shapes.
     const withText = design.buttonTextColor ? { ...(own ?? {}), color: design.buttonTextColor } : own;
-    return glass ? { ...(withText ?? {}), ...glass } : withText;
+    const out = glass ? { ...(withText ?? {}), ...glass } : withText;
+    return out && !isPlainLinkKind(kind) ? clampWidgetRadius(out) : out;
   };
-  const iconOnly = (prefs.buttonsCustom || prefs.customDesign) && prefs.buttonShape === "icon";
+  const linkMode = prefs.buttonShape;
+  const iconOnly = false;
+  const iconLinks = blocks.filter((b) => isPlainLinkBlock(b) && !b.hidden);
   /** Eigen canvas- en patroonkleuren overschrijven het thema, indien gekozen. */
   const canvas = {
     ...t,
@@ -522,6 +526,47 @@ export function ProfileView({
           <ProfilePassport handle={profile.username} theme={t} compact />
           {profile.username && <ConnectedApps handle={profile.username} compact />}
         </h1>
+{/* Fixed header order: name, @handle, location, bio, link icons — then everything else. */}
+        {/* Gratis leden tonen hun alias-namespace, Pro-leden hun schone handle.
+            De subtitel is een subtiele link naar het live profiel. Een workspace
+            heeft bewust géén username (username: null) — dan valt deze regel weg. */}
+        {shownPath && (
+          <a
+            href={`https://rout.be${shownPath}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1 break-all text-center font-mono text-sm underline-offset-4 transition-opacity hover:underline hover:opacity-80"
+            style={{ color: t.muted }}
+          >
+            {`@${shownPath.slice(1)}`}
+          </a>
+        )}
+        {prefs.locationVisible && prefs.locationBadge && (
+          <span
+            className="mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium"
+            style={{ border: `1px solid ${t.border}`, color: t.muted }}
+          >
+            {prefs.locationBadge}
+          </span>
+        )}
+
+        {(shownBio || profile.tagline) && (
+          <p className="mt-3 max-w-sm text-balance text-center text-sm" style={{ color: t.muted }}>
+            {shownBio || profile.tagline}
+          </p>
+        )}
+
+        {linkMode !== "bar" && iconLinks.length > 0 && (
+          <nav aria-label={tx("profile.links", { defaultValue: "Links" })} className="mt-4 flex max-w-sm flex-wrap items-center justify-center gap-2.5">
+            {iconLinks.map((b) => (
+              <a key={b.id} href={blockHref(b)} target="_blank" rel="noopener noreferrer" onClick={() => trackClick(b.id, b.label)} aria-label={b.label} title={b.label}
+                className={cn("flex h-11 w-11 items-center justify-center transition-transform hover:-translate-y-0.5", ctaClass(b.id))}
+                style={{ ...styleFor(b.kind), borderRadius: 999, padding: 0, minHeight: 0 }}>
+                {b.thumbnailUrl ? <img src={b.thumbnailUrl} alt="" className="h-6 w-6 rounded-full object-cover" loading="lazy" /> : <SocialPlatformIcon source={blockHref(b) || b.kind} iconMode={b.iconMode} className="h-5 w-5 text-current" />}
+              </a>
+            ))}
+          </nav>
+        )}
         {profile.username && <ProfilePageTabs handle={profile.username} theme={t} />}
         {profile.fediverse && <a href={profile.fediverse.url} rel="me noopener noreferrer" target="_blank" className="mt-2 inline-flex max-w-full items-center gap-1.5 text-sm text-foreground">
           <span className="truncate">Mastodon</span>
@@ -552,36 +597,6 @@ export function ProfileView({
             theme={t}
           />
         )}
-        {/* Gratis leden tonen hun alias-namespace, Pro-leden hun schone handle.
-            De subtitel is een subtiele link naar het live profiel. Een workspace
-            heeft bewust géén username (username: null) — dan valt deze regel weg. */}
-        {shownPath && (
-          <a
-            href={`https://rout.be${shownPath}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-1 break-all text-center text-sm underline-offset-4 transition-opacity hover:underline hover:opacity-80"
-            style={{ color: t.muted }}
-          >
-            {`rout.be${shownPath}`}
-          </a>
-        )}
-        {prefs.locationVisible && prefs.locationBadge && (
-          <span
-            className="mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium"
-            style={{ border: `1px solid ${t.border}`, color: t.muted }}
-          >
-            {prefs.locationBadge}
-          </span>
-        )}
-
-        {/* Fixed header order: photo, name, username, location, bio — then trust details. */}
-        {(shownBio || profile.tagline) && (
-          <p className="mt-3 max-w-sm text-balance text-center text-sm" style={{ color: t.muted }}>
-            {shownBio || profile.tagline}
-          </p>
-        )}
-
         <MemberSinceBadge
           createdAt={profile.created_at_iso ?? profile.created_at ?? null}
           stamp={profile.genesis_stamp ?? null}
@@ -690,7 +705,7 @@ export function ProfileView({
             <p className="text-center text-sm" style={{ color: t.muted }}>
                {tx("profile.noLinks")} </p>
           )}
-          {blocks.map((b) => bentoCell(b,
+          {blocks.filter((b) => linkMode !== "icon" || !isPlainLinkBlock(b)).map((b) => bentoCell(b,
             b.kind === "widget:guestbook" ? (
               profile.username && prefs.guestbookEnabled ? <div key={b.id} className="w-full lg:col-span-full"><ProfileGuestbook handle={profile.username} theme={t} /></div> : null
             ) : b.kind === "widget:badges" ? (
@@ -1015,4 +1030,13 @@ function ProfileStatus({ handle, prefs, background }: {
       ) : undefined}
     />
   );
+}
+
+const NON_LINK_KINDS = new Set(["feedback", "live", "spacer", "text", "event_list", "newsletter", "booking_request", "faq_accordion", "map_embed", "vcard", "contact_form"]);
+function isPlainLinkKind(kind: string) {
+  return !kind.startsWith("widget:") && !NON_LINK_KINDS.has(kind) && !isPromoBlock(kind) && !isWidgetBlock(kind) && !isProfileSectionKind(kind);
+}
+/** A block that renders as an ordinary outbound link (bar or icon). */
+function isPlainLinkBlock(b: ProfileBlock) {
+  return isPlainLinkKind(b.kind) && !isBookingUrl(blockHref(b)) && /^(https?:|mailto:|tel:)/.test(blockHref(b));
 }
