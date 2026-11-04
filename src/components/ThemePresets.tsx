@@ -228,7 +228,7 @@ export function ThemePresets({ selectedTheme, onThemeChange }: ThemePresetsProps
     <div className="space-y-2">
       <PickerAnnouncer message={selectedPreset ? `${selectedPreset.name} theme selected` : ""} />
       <div data-testid="theme-filters" className="min-w-0 overflow-x-auto pb-1">
-        <SpatialChoice value={filter} onChange={setFilter} label="Themacategorie" options={FILTERS.map(f => ({ value: f.id, label: f.label }))} className="w-max min-w-full" />
+        <SpatialChoice value={filter} onChange={(v) => setFilter(v as typeof filter)} label="Themacategorie" options={FILTERS.map(f => ({ value: f.id, label: f.label }))} className="w-max min-w-full" />
       </div>
 
       <div

@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Link2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { DocHelpLink } from "@/components/seo/DocHelpLink";
 import { qrGuidePath } from "@/lib/qr-guide-path";
 import { Link } from "@/lib/router-compat";
