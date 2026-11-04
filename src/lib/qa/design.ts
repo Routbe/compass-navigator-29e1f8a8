@@ -8,9 +8,17 @@ export const QA_PAGE_SURFACE = { card: "hsl(var(--story-card))", border: "var(--
 export function qaDesign(raw: unknown, scope: ComponentScope, surface: { card: string; border: string; text: string; muted: string }) {
   const prefs = parseDisplayPrefs(raw);
   const d = resolveComponentDesign(prefs, prefs.themeOverrides, scope);
-  return {
+  const style = {
     ...(designButtonStyle({ ...d, buttonsCustom: d.buttonsCustom || d.hasButtonOverride }, { ...surface, bg: surface.card }) ?? {}),
     ...(d.typographyCustom || prefs.themeOverrides[scope]?.fontPairing ? { fontFamily: fontPairingOf(d.fontPairing).body } : {}),
     ...(glassSurfaceStyle(d, scope, prefs.glassTargets) ?? {}),
   };
+  return clampWidgetRadius(style);
+}
+
+/** Forms and widgets can never become pills: a 999px radius clips their fields and buttons. */
+export function clampWidgetRadius<T extends { borderRadius?: unknown }>(style: T): T {
+  const r = style.borderRadius;
+  const px = typeof r === "number" ? r : typeof r === "string" ? parseFloat(r) : NaN;
+  return Number.isFinite(px) && px > 28 ? { ...style, borderRadius: 28 } : style;
 }

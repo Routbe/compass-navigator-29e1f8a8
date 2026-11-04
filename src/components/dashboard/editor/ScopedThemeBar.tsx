@@ -218,7 +218,7 @@ export function ScopedThemeBar({ prefs, setPref, scope = "all", showTypography =
           </div>
           {scope === "all" && <>
             <Group label="Linkweergave">
-              {([["bar", "Lijn met naam"], ["icon", "Alleen icoon"]] as const).map(([id, label]) => <StudioChip key={id} active={prefs.buttonShape === id} onClick={() => setPref("buttonShape", id)}>{label}</StudioChip>)}
+              {([["bar", "Balk met naam"], ["icon", "Icoontjes onder bio"], ["both", "Beide"]] as const).map(([id, label]) => <StudioChip key={id} active={prefs.buttonShape === id} onClick={() => setPref("buttonShape", id)}>{label}</StudioChip>)}
             </Group>
             <div className="grid gap-3 sm:grid-cols-2">
               <label className="space-y-1 text-xs"><span className="input-label">Knopgrootte</span><Select value={prefs.buttonSize} onValueChange={(value) => setPref("buttonSize", value as ProfileDisplayPrefs["buttonSize"])}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{BUTTON_SIZES.map((item) => <SelectItem key={item.id} value={item.id}>{item.label}</SelectItem>)}</SelectContent></Select></label>

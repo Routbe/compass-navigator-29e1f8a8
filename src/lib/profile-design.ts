@@ -84,7 +84,7 @@ export interface ProfileDesignPrefs {
   buttonVariant: ButtonVariant;
   buttonRadius: ButtonRadius;
   /** "bar" = knop met naam; "icon" = ronde bol met alleen het icoon (naam blijft voor schermlezers). */
-  buttonShape: "bar" | "icon";
+  buttonShape: "bar" | "icon" | "both";
   buttonSize: ButtonSize;
   buttonEffect: ButtonEffect;
   buttonColor: string | null;
@@ -924,7 +924,7 @@ export function normalizeDesignPrefs(r: Record<string, unknown>): ProfileDesignP
       BUTTON_RADII.map((v) => v.id),
       "rounded",
     ),
-    buttonShape: pick(r["buttonShape"], ["bar", "icon"] as const, "bar"),
+    buttonShape: pick(r["buttonShape"], ["bar", "icon", "both"] as const, "bar"),
     buttonSize: pick(
       r["buttonSize"],
       BUTTON_SIZES.map((v) => v.id),
