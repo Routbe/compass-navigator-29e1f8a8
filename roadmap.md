@@ -35,3 +35,10 @@
 ## Homepage & UI (Nov 4 request)
 - [ ] Homepage rebuild: Neon.com-length long scroll, full-width image per chapter, scroll animations, tell everything ROUT does (login, cards, human/identity verification, pay pages, integrations, QR generator, links/analytics like Bitly/QRCG/QRCodeMonkey); card image lower and higher quality.
 - [ ] Re-audit every button/frame/control in every folder to the chosen ROUT UI style.
+
+## Wallet, about pages & press (Nov 4, later)
+- [x] Homepage hero: moving signal field + dotted Natural Earth globe with Brussels routes (missing globe image fixed).
+- [x] Google Wallet console PNGs: logo 660, wide logo 1280x400, hero 1032x336, card + trust image modules; public at /press/wallet.
+- [x] New pages: /about/platform, /about/rout-card, /info/sign-in-with-rout, /info/human-verification, /info/payment-pages, /info/integrations, /info/links-and-analytics; press subpages /press/wallet and /press/previews.
+- [x] Docs tables now render (GFM) across all help pages.
+- [ ] Translate new help pages to EN/FR/DE (catalog is Dutch-only today).
