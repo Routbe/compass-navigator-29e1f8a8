@@ -20,7 +20,7 @@ export const Route = createFileRoute("/api_/wallet/render/$cardId/hero.png")({
         const { svgToPng } = await import("@/lib/og-render.server");
         const svg = walletHeroSvg({
           displayName: card.displayName, handle: card.handle, sovereignId: card.sovereignId,
-          bg: card.hexBackgroundColor, accent: card.accentHex, fg: card.hexForegroundColor, space: card.space,
+          bg: card.hexBackgroundColor, accent: card.accentHex ?? "#41db97", fg: card.hexForegroundColor, space: card.space,
         });
         const png = await svgToPng(svg, walletOrigin(), card.hexBackgroundColor, 3096);
         return new Response(png as BodyInit, {

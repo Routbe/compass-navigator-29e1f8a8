@@ -160,7 +160,7 @@ export type WalletCardPayload = {
   hexBackgroundColor: string;
   hexForegroundColor: string;
   /** Profile accent (rings, guilloche, logo tint on the hero image). */
-  accentHex: string;
+  accentHex?: string;
   /** Absolute https URL through ROUT's own avatar/proxy route, or null. */
   heroImageUrl: string | null;
   /** Short public card number, derived from a hash (never the raw account id). */
