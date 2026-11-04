@@ -90,7 +90,9 @@ import { Route as AboutCustomBadgesRouteImport } from './routes/about.custom-bad
 import { Route as AboutEcosystemRouteImport } from './routes/about.ecosystem'
 import { Route as AboutManifestoRouteImport } from './routes/about.manifesto'
 import { Route as AboutOpenSourceRouteImport } from './routes/about.open-source'
+import { Route as AboutPlatformRouteImport } from './routes/about.platform'
 import { Route as AboutResponsibleAiRouteImport } from './routes/about.responsible-ai'
+import { Route as AboutRoutCardRouteImport } from './routes/about.rout-card'
 import { Route as AboutSovereigntyRouteImport } from './routes/about.sovereignty'
 import { Route as AboutUsernamesRouteImport } from './routes/about.usernames'
 import { Route as AccountAccountViewRouteImport } from './routes/account.$accountView'
@@ -152,8 +154,13 @@ import { Route as InfoCredentialsRouteImport } from './routes/info.credentials'
 import { Route as InfoCustomBadgesRouteImport } from './routes/info.custom-badges'
 import { Route as InfoGhostModeRouteImport } from './routes/info.ghost-mode'
 import { Route as InfoGuestbookRouteImport } from './routes/info.guestbook'
+import { Route as InfoHumanVerificationRouteImport } from './routes/info.human-verification'
+import { Route as InfoIntegrationsRouteImport } from './routes/info.integrations'
+import { Route as InfoLinksAndAnalyticsRouteImport } from './routes/info.links-and-analytics'
+import { Route as InfoPaymentPagesRouteImport } from './routes/info.payment-pages'
 import { Route as InfoProfilesRouteImport } from './routes/info.profiles'
 import { Route as InfoQrStudioRouteImport } from './routes/info.qr-studio'
+import { Route as InfoSignInWithRoutRouteImport } from './routes/info.sign-in-with-rout'
 import { Route as InfoTipsRouteImport } from './routes/info.tips'
 import { Route as InfoUsernamesRouteImport } from './routes/info.usernames'
 import { Route as InfoWalletRouteImport } from './routes/info.wallet'
@@ -800,9 +807,19 @@ const AboutOpenSourceRoute = AboutOpenSourceRouteImport.update({
   path: '/open-source',
   getParentRoute: () => AboutRoute,
 } as any)
+const AboutPlatformRoute = AboutPlatformRouteImport.update({
+  id: '/platform',
+  path: '/platform',
+  getParentRoute: () => AboutRoute,
+} as any)
 const AboutResponsibleAiRoute = AboutResponsibleAiRouteImport.update({
   id: '/responsible-ai',
   path: '/responsible-ai',
+  getParentRoute: () => AboutRoute,
+} as any)
+const AboutRoutCardRoute = AboutRoutCardRouteImport.update({
+  id: '/rout-card',
+  path: '/rout-card',
   getParentRoute: () => AboutRoute,
 } as any)
 const AboutSovereigntyRoute = AboutSovereigntyRouteImport.update({
@@ -1112,6 +1129,26 @@ const InfoGuestbookRoute = InfoGuestbookRouteImport.update({
   path: '/guestbook',
   getParentRoute: () => InfoRoute,
 } as any)
+const InfoHumanVerificationRoute = InfoHumanVerificationRouteImport.update({
+  id: '/human-verification',
+  path: '/human-verification',
+  getParentRoute: () => InfoRoute,
+} as any)
+const InfoIntegrationsRoute = InfoIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => InfoRoute,
+} as any)
+const InfoLinksAndAnalyticsRoute = InfoLinksAndAnalyticsRouteImport.update({
+  id: '/links-and-analytics',
+  path: '/links-and-analytics',
+  getParentRoute: () => InfoRoute,
+} as any)
+const InfoPaymentPagesRoute = InfoPaymentPagesRouteImport.update({
+  id: '/payment-pages',
+  path: '/payment-pages',
+  getParentRoute: () => InfoRoute,
+} as any)
 const InfoProfilesRoute = InfoProfilesRouteImport.update({
   id: '/profiles',
   path: '/profiles',
@@ -1120,6 +1157,11 @@ const InfoProfilesRoute = InfoProfilesRouteImport.update({
 const InfoQrStudioRoute = InfoQrStudioRouteImport.update({
   id: '/qr-studio',
   path: '/qr-studio',
+  getParentRoute: () => InfoRoute,
+} as any)
+const InfoSignInWithRoutRoute = InfoSignInWithRoutRouteImport.update({
+  id: '/sign-in-with-rout',
+  path: '/sign-in-with-rout',
   getParentRoute: () => InfoRoute,
 } as any)
 const InfoTipsRoute = InfoTipsRouteImport.update({
@@ -2506,7 +2548,9 @@ export interface FileRoutesByFullPath {
   '/about/ecosystem': typeof AboutEcosystemRoute
   '/about/manifesto': typeof AboutManifestoRoute
   '/about/open-source': typeof AboutOpenSourceRoute
+  '/about/platform': typeof AboutPlatformRoute
   '/about/responsible-ai': typeof AboutResponsibleAiRoute
+  '/about/rout-card': typeof AboutRoutCardRoute
   '/about/sovereignty': typeof AboutSovereigntyRoute
   '/about/usernames': typeof AboutUsernamesRoute
   '/account/$accountView': typeof AccountAccountViewRoute
@@ -2562,8 +2606,13 @@ export interface FileRoutesByFullPath {
   '/info/custom-badges': typeof InfoCustomBadgesRoute
   '/info/ghost-mode': typeof InfoGhostModeRoute
   '/info/guestbook': typeof InfoGuestbookRoute
+  '/info/human-verification': typeof InfoHumanVerificationRoute
+  '/info/integrations': typeof InfoIntegrationsRoute
+  '/info/links-and-analytics': typeof InfoLinksAndAnalyticsRoute
+  '/info/payment-pages': typeof InfoPaymentPagesRoute
   '/info/profiles': typeof InfoProfilesRoute
   '/info/qr-studio': typeof InfoQrStudioRoute
+  '/info/sign-in-with-rout': typeof InfoSignInWithRoutRoute
   '/info/tips': typeof InfoTipsRoute
   '/info/usernames': typeof InfoUsernamesRoute
   '/info/wallet': typeof InfoWalletRoute
@@ -2877,7 +2926,9 @@ export interface FileRoutesByTo {
   '/about/ecosystem': typeof AboutEcosystemRoute
   '/about/manifesto': typeof AboutManifestoRoute
   '/about/open-source': typeof AboutOpenSourceRoute
+  '/about/platform': typeof AboutPlatformRoute
   '/about/responsible-ai': typeof AboutResponsibleAiRoute
+  '/about/rout-card': typeof AboutRoutCardRoute
   '/about/sovereignty': typeof AboutSovereigntyRoute
   '/about/usernames': typeof AboutUsernamesRoute
   '/account/$accountView': typeof AccountAccountViewRoute
@@ -2933,8 +2984,13 @@ export interface FileRoutesByTo {
   '/info/custom-badges': typeof InfoCustomBadgesRoute
   '/info/ghost-mode': typeof InfoGhostModeRoute
   '/info/guestbook': typeof InfoGuestbookRoute
+  '/info/human-verification': typeof InfoHumanVerificationRoute
+  '/info/integrations': typeof InfoIntegrationsRoute
+  '/info/links-and-analytics': typeof InfoLinksAndAnalyticsRoute
+  '/info/payment-pages': typeof InfoPaymentPagesRoute
   '/info/profiles': typeof InfoProfilesRoute
   '/info/qr-studio': typeof InfoQrStudioRoute
+  '/info/sign-in-with-rout': typeof InfoSignInWithRoutRoute
   '/info/tips': typeof InfoTipsRoute
   '/info/usernames': typeof InfoUsernamesRoute
   '/info/wallet': typeof InfoWalletRoute
@@ -3261,7 +3317,9 @@ export interface FileRoutesById {
   '/about/ecosystem': typeof AboutEcosystemRoute
   '/about/manifesto': typeof AboutManifestoRoute
   '/about/open-source': typeof AboutOpenSourceRoute
+  '/about/platform': typeof AboutPlatformRoute
   '/about/responsible-ai': typeof AboutResponsibleAiRoute
+  '/about/rout-card': typeof AboutRoutCardRoute
   '/about/sovereignty': typeof AboutSovereigntyRoute
   '/about/usernames': typeof AboutUsernamesRoute
   '/account/$accountView': typeof AccountAccountViewRoute
@@ -3317,8 +3375,13 @@ export interface FileRoutesById {
   '/info/custom-badges': typeof InfoCustomBadgesRoute
   '/info/ghost-mode': typeof InfoGhostModeRoute
   '/info/guestbook': typeof InfoGuestbookRoute
+  '/info/human-verification': typeof InfoHumanVerificationRoute
+  '/info/integrations': typeof InfoIntegrationsRoute
+  '/info/links-and-analytics': typeof InfoLinksAndAnalyticsRoute
+  '/info/payment-pages': typeof InfoPaymentPagesRoute
   '/info/profiles': typeof InfoProfilesRoute
   '/info/qr-studio': typeof InfoQrStudioRoute
+  '/info/sign-in-with-rout': typeof InfoSignInWithRoutRoute
   '/info/tips': typeof InfoTipsRoute
   '/info/usernames': typeof InfoUsernamesRoute
   '/info/wallet': typeof InfoWalletRoute
@@ -3648,7 +3711,9 @@ export interface FileRouteTypes {
     | '/about/ecosystem'
     | '/about/manifesto'
     | '/about/open-source'
+    | '/about/platform'
     | '/about/responsible-ai'
+    | '/about/rout-card'
     | '/about/sovereignty'
     | '/about/usernames'
     | '/account/$accountView'
@@ -3704,8 +3769,13 @@ export interface FileRouteTypes {
     | '/info/custom-badges'
     | '/info/ghost-mode'
     | '/info/guestbook'
+    | '/info/human-verification'
+    | '/info/integrations'
+    | '/info/links-and-analytics'
+    | '/info/payment-pages'
     | '/info/profiles'
     | '/info/qr-studio'
+    | '/info/sign-in-with-rout'
     | '/info/tips'
     | '/info/usernames'
     | '/info/wallet'
@@ -4019,7 +4089,9 @@ export interface FileRouteTypes {
     | '/about/ecosystem'
     | '/about/manifesto'
     | '/about/open-source'
+    | '/about/platform'
     | '/about/responsible-ai'
+    | '/about/rout-card'
     | '/about/sovereignty'
     | '/about/usernames'
     | '/account/$accountView'
@@ -4075,8 +4147,13 @@ export interface FileRouteTypes {
     | '/info/custom-badges'
     | '/info/ghost-mode'
     | '/info/guestbook'
+    | '/info/human-verification'
+    | '/info/integrations'
+    | '/info/links-and-analytics'
+    | '/info/payment-pages'
     | '/info/profiles'
     | '/info/qr-studio'
+    | '/info/sign-in-with-rout'
     | '/info/tips'
     | '/info/usernames'
     | '/info/wallet'
@@ -4402,7 +4479,9 @@ export interface FileRouteTypes {
     | '/about/ecosystem'
     | '/about/manifesto'
     | '/about/open-source'
+    | '/about/platform'
     | '/about/responsible-ai'
+    | '/about/rout-card'
     | '/about/sovereignty'
     | '/about/usernames'
     | '/account/$accountView'
@@ -4458,8 +4537,13 @@ export interface FileRouteTypes {
     | '/info/custom-badges'
     | '/info/ghost-mode'
     | '/info/guestbook'
+    | '/info/human-verification'
+    | '/info/integrations'
+    | '/info/links-and-analytics'
+    | '/info/payment-pages'
     | '/info/profiles'
     | '/info/qr-studio'
+    | '/info/sign-in-with-rout'
     | '/info/tips'
     | '/info/usernames'
     | '/info/wallet'
@@ -5488,11 +5572,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutOpenSourceRouteImport
       parentRoute: typeof AboutRoute
     }
+    '/about/platform': {
+      id: '/about/platform'
+      path: '/platform'
+      fullPath: '/about/platform'
+      preLoaderRoute: typeof AboutPlatformRouteImport
+      parentRoute: typeof AboutRoute
+    }
     '/about/responsible-ai': {
       id: '/about/responsible-ai'
       path: '/responsible-ai'
       fullPath: '/about/responsible-ai'
       preLoaderRoute: typeof AboutResponsibleAiRouteImport
+      parentRoute: typeof AboutRoute
+    }
+    '/about/rout-card': {
+      id: '/about/rout-card'
+      path: '/rout-card'
+      fullPath: '/about/rout-card'
+      preLoaderRoute: typeof AboutRoutCardRouteImport
       parentRoute: typeof AboutRoute
     }
     '/about/sovereignty': {
@@ -5922,6 +6020,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InfoGuestbookRouteImport
       parentRoute: typeof InfoRoute
     }
+    '/info/human-verification': {
+      id: '/info/human-verification'
+      path: '/human-verification'
+      fullPath: '/info/human-verification'
+      preLoaderRoute: typeof InfoHumanVerificationRouteImport
+      parentRoute: typeof InfoRoute
+    }
+    '/info/integrations': {
+      id: '/info/integrations'
+      path: '/integrations'
+      fullPath: '/info/integrations'
+      preLoaderRoute: typeof InfoIntegrationsRouteImport
+      parentRoute: typeof InfoRoute
+    }
+    '/info/links-and-analytics': {
+      id: '/info/links-and-analytics'
+      path: '/links-and-analytics'
+      fullPath: '/info/links-and-analytics'
+      preLoaderRoute: typeof InfoLinksAndAnalyticsRouteImport
+      parentRoute: typeof InfoRoute
+    }
+    '/info/payment-pages': {
+      id: '/info/payment-pages'
+      path: '/payment-pages'
+      fullPath: '/info/payment-pages'
+      preLoaderRoute: typeof InfoPaymentPagesRouteImport
+      parentRoute: typeof InfoRoute
+    }
     '/info/profiles': {
       id: '/info/profiles'
       path: '/profiles'
@@ -5934,6 +6060,13 @@ declare module '@tanstack/react-router' {
       path: '/qr-studio'
       fullPath: '/info/qr-studio'
       preLoaderRoute: typeof InfoQrStudioRouteImport
+      parentRoute: typeof InfoRoute
+    }
+    '/info/sign-in-with-rout': {
+      id: '/info/sign-in-with-rout'
+      path: '/sign-in-with-rout'
+      fullPath: '/info/sign-in-with-rout'
+      preLoaderRoute: typeof InfoSignInWithRoutRouteImport
       parentRoute: typeof InfoRoute
     }
     '/info/tips': {
@@ -7819,7 +7952,9 @@ interface AboutRouteChildren {
   AboutEcosystemRoute: typeof AboutEcosystemRoute
   AboutManifestoRoute: typeof AboutManifestoRoute
   AboutOpenSourceRoute: typeof AboutOpenSourceRoute
+  AboutPlatformRoute: typeof AboutPlatformRoute
   AboutResponsibleAiRoute: typeof AboutResponsibleAiRoute
+  AboutRoutCardRoute: typeof AboutRoutCardRoute
   AboutSovereigntyRoute: typeof AboutSovereigntyRoute
   AboutUsernamesRoute: typeof AboutUsernamesRoute
   AboutIndexRoute: typeof AboutIndexRoute
@@ -7833,7 +7968,9 @@ const AboutRouteChildren: AboutRouteChildren = {
   AboutEcosystemRoute: AboutEcosystemRoute,
   AboutManifestoRoute: AboutManifestoRoute,
   AboutOpenSourceRoute: AboutOpenSourceRoute,
+  AboutPlatformRoute: AboutPlatformRoute,
   AboutResponsibleAiRoute: AboutResponsibleAiRoute,
+  AboutRoutCardRoute: AboutRoutCardRoute,
   AboutSovereigntyRoute: AboutSovereigntyRoute,
   AboutUsernamesRoute: AboutUsernamesRoute,
   AboutIndexRoute: AboutIndexRoute,
@@ -7963,8 +8100,13 @@ interface InfoRouteChildren {
   InfoCustomBadgesRoute: typeof InfoCustomBadgesRoute
   InfoGhostModeRoute: typeof InfoGhostModeRoute
   InfoGuestbookRoute: typeof InfoGuestbookRoute
+  InfoHumanVerificationRoute: typeof InfoHumanVerificationRoute
+  InfoIntegrationsRoute: typeof InfoIntegrationsRoute
+  InfoLinksAndAnalyticsRoute: typeof InfoLinksAndAnalyticsRoute
+  InfoPaymentPagesRoute: typeof InfoPaymentPagesRoute
   InfoProfilesRoute: typeof InfoProfilesRoute
   InfoQrStudioRoute: typeof InfoQrStudioRoute
+  InfoSignInWithRoutRoute: typeof InfoSignInWithRoutRoute
   InfoTipsRoute: typeof InfoTipsRoute
   InfoUsernamesRoute: typeof InfoUsernamesRoute
   InfoWalletRoute: typeof InfoWalletRoute
@@ -7982,8 +8124,13 @@ const InfoRouteChildren: InfoRouteChildren = {
   InfoCustomBadgesRoute: InfoCustomBadgesRoute,
   InfoGhostModeRoute: InfoGhostModeRoute,
   InfoGuestbookRoute: InfoGuestbookRoute,
+  InfoHumanVerificationRoute: InfoHumanVerificationRoute,
+  InfoIntegrationsRoute: InfoIntegrationsRoute,
+  InfoLinksAndAnalyticsRoute: InfoLinksAndAnalyticsRoute,
+  InfoPaymentPagesRoute: InfoPaymentPagesRoute,
   InfoProfilesRoute: InfoProfilesRoute,
   InfoQrStudioRoute: InfoQrStudioRoute,
+  InfoSignInWithRoutRoute: InfoSignInWithRoutRoute,
   InfoTipsRoute: InfoTipsRoute,
   InfoUsernamesRoute: InfoUsernamesRoute,
   InfoWalletRoute: InfoWalletRoute,
