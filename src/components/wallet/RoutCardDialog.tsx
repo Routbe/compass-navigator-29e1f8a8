@@ -565,6 +565,26 @@ export function RoutCardDialog({ open, onOpenChange, handle, space }: { open: bo
           {!gyro && <Button type="button" size="sm" variant="ghost" className="gap-1.5" onClick={() => void enableGyro()}><Smartphone className="h-3.5 w-3.5" aria-hidden /> {t("card.gyro")}</Button>}
         </div>
 
+        <div className="grid gap-2">
+          <Button
+            type="button"
+            className="h-11 gap-2 rounded-full bg-foreground text-background hover:bg-foreground/90"
+            disabled={!card || busy !== null || status?.google === false}
+            onClick={() => void addGoogle()}
+          >
+            {busy === "google" ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <Wallet className="h-4 w-4" aria-hidden />}
+            Add to Google Wallet
+          </Button>
+          <Button type="button" variant="outline" className="h-11 gap-2 rounded-full" disabled={!card || busy !== null || status?.apple === false} onClick={() => void addApple()}>
+            {busy === "apple" ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <Wallet className="h-4 w-4" aria-hidden />}
+            {t("wallet.apple")}
+          </Button>
+          <Button type="button" variant="outline" className="h-11 gap-2 rounded-full" disabled={!card || busy !== null} onClick={() => void saveVcf()}>
+            <UserPlus className="h-4 w-4" aria-hidden /> {t("card.vcf")}
+          </Button>
+          {status && (!status.google || !status.apple) && <p className="text-center text-xs text-muted-foreground">{t("wallet.partly")}</p>}
+        </div>
+
         {card && ownerState.owner && (
           <div className="flex items-center justify-between gap-3 rounded-2xl border border-border p-3">
             <p className="text-xs text-muted-foreground">
@@ -663,25 +683,6 @@ export function RoutCardDialog({ open, onOpenChange, handle, space }: { open: bo
           </div>
         )}
 
-        <div className="grid gap-2">
-          <Button
-            type="button"
-            className="h-11 gap-2 rounded-full bg-foreground text-background hover:bg-foreground/90"
-            disabled={!card || busy !== null || status?.google === false}
-            onClick={() => void addGoogle()}
-          >
-            {busy === "google" ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <Wallet className="h-4 w-4" aria-hidden />}
-            Add to Google Wallet
-          </Button>
-          <Button type="button" variant="outline" className="h-11 gap-2 rounded-full" disabled={!card || busy !== null || status?.apple === false} onClick={() => void addApple()}>
-            {busy === "apple" ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <Wallet className="h-4 w-4" aria-hidden />}
-            {t("wallet.apple")}
-          </Button>
-          <Button type="button" variant="outline" className="h-11 gap-2 rounded-full" disabled={!card || busy !== null} onClick={() => void saveVcf()}>
-            <UserPlus className="h-4 w-4" aria-hidden /> {t("card.vcf")}
-          </Button>
-          {status && (!status.google || !status.apple) && <p className="text-center text-xs text-muted-foreground">{t("wallet.partly")}</p>}
-        </div>
       </DialogContent>
     </Dialog>
   );
