@@ -40,7 +40,7 @@ void main(){
   float clear=smoothstep(.12,.62,length(q*vec2(.9,1.4)));
   float glow=exp(-8.*length((uv-pointer)*vec2(aspect,1.)));
   float topfade=smoothstep(.02,.25,uv.y)*smoothstep(1.,.82,uv.y);
-  col*=scan*topfade*(.18+clear*.82)*(1.+glow*1.2);
+  col*=1.6*scan*topfade*(.2+clear*.8)*(1.+glow*1.2);
   gl_FragColor=vec4(col,min(1.,max(col.r,max(col.g,col.b))));
 }`;
 
@@ -112,7 +112,7 @@ function Globe({ colors, reduced, ready }: { colors: { ink: string; emerald: str
     const x = parseFloat(host?.style.getPropertyValue('--lg-x') || '50') / 100 - 0.5;
     group.current.rotation.z += (-x * 0.06 - group.current.rotation.z) * (1 - Math.exp(-3 * d));
   });
-  return <group position={[0, -3.35, 0]} rotation={[0.62, 0, 0]}>
+  return <group position={[0, -4.1, 0]} rotation={[0.55, 0, 0]}>
     <group ref={group} rotation={[0, -0.25, 0]}>
       <points><bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[buffers.pos, 3]} />
@@ -122,7 +122,7 @@ function Globe({ colors, reduced, ready }: { colors: { ink: string; emerald: str
       {NODES.map((n, i) => <Arc key={i} to={n} offset={i * 0.137} cyan={c.cyan} />)}
       <mesh position={toVec(...HUB, R * 1.005)}><sphereGeometry args={[0.035, 12, 12]} /><meshBasicMaterial color={c.cyan} /></mesh>
     </group>
-    <mesh scale={1.06}><sphereGeometry args={[R, 64, 64]} /><shaderMaterial vertexShader={rimVertex} fragmentShader={rimFragment} uniforms={rimUniforms} transparent depthWrite={false} blending={AdditiveBlending} side={1} /></mesh>
+    <mesh scale={1.06}><sphereGeometry args={[R, 64, 64]} /><shaderMaterial vertexShader={rimVertex} fragmentShader={rimFragment} uniforms={rimUniforms} transparent depthWrite={false} blending={AdditiveBlending} /></mesh>
   </group>;
 }
 
