@@ -518,23 +518,25 @@ export function DesignButtonsTypographySection({
           <p className="input-label">Knopvorm</p>
           <CustomizeButton open={prefs.buttonsCustom} onToggle={() => setPref("buttonsCustom", !prefs.buttonsCustom)} label="Knoppen aanpassen" controls="buttons-advanced" />
         </div>}
+        <p className="input-label">Links weergeven als</p>
+        <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Links weergeven als">
+          {([["bar", "Balken"], ["icon", "Icoontjes onder bio"], ["both", "Beide"]] as const).map(([id, label]) => (
+            <button key={id} type="button" role="radio" aria-checked={prefs.buttonShape === id} onClick={() => setPref("buttonShape", id)}
+              className={cn("flex flex-col items-center gap-2 rounded-xl border p-3 text-xs font-medium", prefs.buttonShape === id ? "border-primary ring-1 ring-primary" : "border-border")}>
+              <span className="flex h-9 w-full items-center justify-center gap-1.5">
+                {id !== "bar" && [0, 1, 2].map((i) => <span key={i} className="h-5 w-5 rounded-full" style={{ background: t.accent ?? t.text }} />)}
+                {id !== "icon" && <span className="h-5 flex-1 rounded-md border border-current" style={{ color: t.text }} />}
+              </span>
+              {label}
+            </button>
+          ))}
+        </div>
+        {prefs.buttonShape === "icon" && (
+          <p role="note" className="rounded-lg border border-border bg-muted/40 p-2.5 text-[11px] text-muted-foreground">
+            Alleen icoontjes is minder duidelijk voor sommige bezoekers; de naam van elke link blijft voor schermlezers beschikbaar.
+          </p>
+        )}
         <CustomCollapse open={prefs.buttonsCustom} id="buttons-advanced">
-          <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Knopvorm">
-            {([["bar", "Lijn met naam"], ["icon", "Ronde bol (alleen icoon)"]] as const).map(([id, label]) => (
-              <button key={id} type="button" role="radio" aria-checked={prefs.buttonShape === id} onClick={() => setPref("buttonShape", id)}
-                className={cn("flex flex-col items-center gap-2 rounded-xl border p-3 text-xs font-medium", prefs.buttonShape === id ? "border-primary ring-1 ring-primary" : "border-border")}>
-                {id === "bar"
-                  ? <span className="flex h-8 w-full items-center justify-center text-[10px]" style={{ ...preview({ buttonShape: "bar" }), borderRadius: radiusPx(prefs.buttonRadius), border: "1px solid currentColor", background: "transparent", color: t.text }}>Mijn link</span>
-                  : <span className="flex h-9 w-9 items-center justify-center" style={{ ...preview({ buttonShape: "icon" }), borderRadius: "999px", padding: 0, background: t.accent ?? t.text, color: t.bg }}>♥</span>}
-                {label}
-              </button>
-            ))}
-          </div>
-          {prefs.buttonShape === "icon" && (
-            <p role="note" className="rounded-lg border border-border bg-muted/40 p-2.5 text-[11px] text-muted-foreground">
-              Alleen iconen is minder duidelijk voor sommige bezoekers en schermlezers.
-            </p>
-          )}
           <p className="input-label pt-2">Knopstijl</p>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {BUTTON_VARIANTS.map((v) => (

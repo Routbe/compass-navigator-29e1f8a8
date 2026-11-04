@@ -6,7 +6,7 @@ const text = (v: unknown) => v == null ? null : String(v);
 const number = (r: Row | undefined, key: string) => Number(r?.[key] ?? 0);
 
 export async function commandOverview() {
-  const [members, badges, actions, events] = await sql.transaction([
+  const [members, badges, actions, events, visits] = await sql.transaction([
     sql`select count(*) as total, count(*) filter (where coalesce(status, 'active') = 'active'
       and not coalesce(is_banned, false) and not coalesce(is_suspended, false)
       and not coalesce(is_shadowbanned, false)) as active from public.profiles`,
@@ -19,11 +19,17 @@ export async function commandOverview() {
       (select count(*) from public.webhook_events where status in ('failed','error')) as failed`,
     sql`select id, source, kind, status, to_json(created_at) as created_at_iso from public.webhook_events
       order by created_at desc, id desc limit 8`,
+    sql`select count(*) filter (where created_at >= now() - interval '1 day') as day,
+      count(*) filter (where created_at >= now() - interval '7 days') as week,
+      count(*) as month,
+      (select count(*) from public.profiles where created_at >= now() - interval '7 days') as new_members
+      from public.profile_visits where created_at >= now() - interval '30 days'`,
   ]);
   return { updatedAt: new Date().toISOString(), totalMembers: number(members[0], "total"),
     activeMembers: number(members[0], "active"), standardBadges: number(badges[0], "standard"), customBadges: number(badges[0], "custom"),
     verificationRequests: number(actions[0], "payments") + number(actions[0], "business") + number(actions[0], "influencer"),
-    sepaReviews: number(actions[0], "sepa"), failedWebhooks: number(actions[0], "failed"),
+    sepaReviews: number(actions[0], "sepa"),
+    visitsDay: number(visits[0], "day"), visitsWeek: number(visits[0], "week"), visitsMonth: number(visits[0], "month"), newMembersWeek: number(visits[0], "new_members"), failedWebhooks: number(actions[0], "failed"),
     events: events.map((r) => ({ id: String(r["id"]), source: String(r["source"]), kind: text(r["kind"]),
       status: String(r["status"]), createdAt: String(r["created_at_iso"]) })) };
 }
