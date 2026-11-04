@@ -116,3 +116,29 @@ ${bunny(48, 36, 46, c.fg)}
 <rect x="1" y="1" width="${w - 2}" height="${h - 2}" fill="none" stroke="${c.accent}" stroke-opacity="0.45" stroke-width="2"/>
 </svg>`;
 }
+
+/** Wide logo (1280×400, Google Wallet "wide logo" field): bunny + ROUT wordmark on ink. */
+export function walletWideLogoSvg(): string {
+  const w = 1280, h = 400;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${BRAND.ink}"/>
+${bunnyWithRings(220, h / 2, 150, BRAND.paper)}
+<text x="420" y="246" font-family="Inter, sans-serif" font-weight="600" font-size="150" letter-spacing="30" fill="${BRAND.paper}">ROUT</text></svg>`;
+}
+
+/** Brand hero (1032×336): generic class-level hero showing a ROUT Card without personal data. */
+export function walletBrandHeroSvg(): string {
+  return walletHeroSvg({ displayName: "ROUT Card", handle: "rout", sovereignId: "SOVEREIGN · EU", bg: "#1b1530", accent: BRAND.mint, fg: BRAND.paper, space: "root" });
+}
+
+/** Image module (1860×620): ROUT Card front beside its three scan layers. */
+export function walletCardModuleSvg(): string {
+  const w = 1860, h = 620;
+  const rows = [["Public QR", "Shows public identity and card status only"], ["NFC handshake", "Authorises access at a verified reader"], ["Rotating token", "Owner-only, single-use digital proof"]];
+  const list = rows.map(([k, v], i) => `<circle cx="1040" cy="${232 + i * 120}" r="10" fill="${i % 2 ? BRAND.purple : BRAND.mint}"/>
+<text x="1072" y="${242 + i * 120}" font-family="Inter, sans-serif" font-weight="600" font-size="40" fill="${BRAND.paper}">${k}</text>
+<text x="1072" y="${284 + i * 120}" font-family="Inter, sans-serif" font-size="26" fill="${BRAND.paper}" opacity="0.62">${v}</text>`).join("");
+  const card = walletHeroSvg({ displayName: "ROUT Card", handle: "rout", sovereignId: "SOVEREIGN · EU", bg: "#1b1530", accent: BRAND.mint, fg: BRAND.paper, space: "root" }).replace("<svg ", `<svg x="80" y="142" width="860" height="280" `);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${BRAND.ink}"/>${guilloche(w, h, BRAND.purple, 0.07)}
+<text x="80" y="96" font-family="Inter, sans-serif" font-weight="600" font-size="30" letter-spacing="8" fill="${BRAND.mint}">ROUT CARD · THREE LAYERS</text>
+${card}${list}</svg>`;
+}
