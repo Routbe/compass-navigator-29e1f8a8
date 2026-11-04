@@ -28,7 +28,7 @@ export function PressSubpage({ kicker, title, intro, children }: { kicker: strin
 export function PressFileGrid({ files }: { files: PressFile[] }) {
   return <ul className="mt-10 grid gap-6 sm:grid-cols-2">
     {files.map((f) => <li key={f.href} className="overflow-hidden rounded-2xl border border-border bg-card">
-      <div className="flex items-center justify-center bg-muted p-4" style={{ aspectRatio: f.ratio }}>
+      <div className="flex items-center justify-center bg-muted p-4" style={{ aspectRatio: "16 / 9" }}>
         <img src={f.href} alt={f.name} loading="lazy" className="max-h-full max-w-full object-contain" />
       </div>
       <div className="flex items-start justify-between gap-4 p-5">
