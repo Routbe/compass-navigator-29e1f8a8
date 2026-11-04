@@ -24,7 +24,7 @@ export const Route = createFileRoute("/api_/wallet/render/$cardId/hero.png")({
         });
         const png = await svgToPng(svg, walletOrigin(), card.hexBackgroundColor, 3096);
         return new Response(png as BodyInit, {
-          headers: { "content-type": "image/png", "x-card-colors": `${card.hexBackgroundColor} ${card.accentHex}`, "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800" },
+          headers: { "content-type": "image/png", "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800" },
         });
       },
     },

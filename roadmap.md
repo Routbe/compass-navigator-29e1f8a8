@@ -29,7 +29,7 @@
 ## Google Wallet upgrade (Nov 4)
 - [x] Link Neon database (My Neon) — 181 tables present.
 - [x] Pass in profile colour (neutral canvases tinted with accent), official ROUT logo, seal + trust-array images, live hero card render at /api/wallet/render/<card>/hero.png, 3-row layout.
-- [ ] Move Wallet buttons higher in the ROUT Card dialog.
+- [x] Move Wallet buttons higher in the ROUT Card dialog.
 - [ ] Google Wallet secrets (issuer id + service account) — waiting on user.
 
 ## Homepage & UI (Nov 4 request)
