@@ -1,4 +1,4 @@
-import { walletCardColor } from "./wallet-art";
+import { saturation, walletCardColor } from "./wallet-art";
 import { cardNumberFromDigest } from "./card-number";
 import { createLocalizedString, walletText } from "./wallet-i18n";
 /**
@@ -200,7 +200,7 @@ export function walletCardPayload(
   const handle = p.handle.toLowerCase();
   // Canonical public addresses (no redirect hop when scanned): root /@handle, alias /u/handle.
   const url = `${base}/${p.space === "alias" ? "u/" : "@"}${encodeURIComponent(handle)}`;
-  const accent = p.accent && HEX6.test(p.accent) ? p.accent.toLowerCase() : "#41db97";
+  const accent = p.accent && HEX6.test(p.accent) && saturation(p.accent) >= 0.25 ? p.accent.toLowerCase() : "#41db97";
   const bg = walletCardColor(p.themeBg, accent);
   const tagline = (p.tagline ?? "").replace(/\s+/g, " ").trim();
   return {
