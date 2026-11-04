@@ -12,6 +12,9 @@ export const mdxComponents = {
   FAQ, QRPreview, OnboardingSteps, CompareTable, RoleMatrix, WorkspaceVsPersonalTable, LimitBar, AnalyticsPreview, SecurityShield, WarningBox, PrintSizeCalculator, DynamicQRFlowchart, DesignPlayground, ContentGrid,
   h2: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => <h2 {...props} id={headingId(textOf(children))}>{children}</h2>,
   h3: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => <h3 {...props} id={headingId(textOf(children))}>{children}</h3>,
+  table: ({ children }: { children?: ReactNode }) => <div className="my-8 overflow-x-auto rounded-2xl border border-border"><table className="!my-0 w-full border-collapse text-left text-sm">{children}</table></div>,
+  th: ({ children }: { children?: ReactNode }) => <th className="border-b border-border bg-muted px-4 py-3 font-medium text-foreground">{children}</th>,
+  td: ({ children }: { children?: ReactNode }) => <td className="border-b border-border px-4 py-3 align-top text-muted-foreground">{children}</td>,
   pre: ({ children }: { children?: ReactNode }) => {
     const child = Children.toArray(children)[0];
     if (!isValidElement<{ className?: string; children?: ReactNode }>(child)) return <pre>{children}</pre>;
