@@ -1,3 +1,4 @@
+import { walletCardColor } from "./wallet-art";
 import { cardNumberFromDigest } from "./card-number";
 import { createLocalizedString, walletText } from "./wallet-i18n";
 /**
@@ -158,6 +159,8 @@ export type WalletCardPayload = {
   qrValue: string;
   hexBackgroundColor: string;
   hexForegroundColor: string;
+  /** Profile accent (rings, guilloche, logo tint on the hero image). */
+  accentHex?: string;
   /** Absolute https URL through ROUT's own avatar/proxy route, or null. */
   heroImageUrl: string | null;
   /** Short public card number, derived from a hash (never the raw account id). */
@@ -188,7 +191,7 @@ export function walletImageUrl(src: string | null, base: string): string | null 
 }
 
 export function walletCardPayload(
-  p: { handle: string; space: "root" | "alias"; displayName: string | null; tagline: string | null; themeBg: string | null; avatarSrc: string | null },
+  p: { handle: string; space: "root" | "alias"; displayName: string | null; tagline: string | null; themeBg: string | null; avatarSrc: string | null; accent?: string | null },
   base: string,
   sovereignId: string,
   /** Handle-independent seed so a renamed handle keeps the same saved pass. */
@@ -197,7 +200,8 @@ export function walletCardPayload(
   const handle = p.handle.toLowerCase();
   // Canonical public addresses (no redirect hop when scanned): root /@handle, alias /u/handle.
   const url = `${base}/${p.space === "alias" ? "u/" : "@"}${encodeURIComponent(handle)}`;
-  const bg = p.themeBg && HEX6.test(p.themeBg) ? p.themeBg.toLowerCase() : "#111111";
+  const accent = p.accent && HEX6.test(p.accent) ? p.accent.toLowerCase() : "#41db97";
+  const bg = walletCardColor(p.themeBg, accent);
   const tagline = (p.tagline ?? "").replace(/\s+/g, " ").trim();
   return {
     serial: walletSerial({ kind: "profile", id: `${p.space}-${serialSeed ?? handle}` }),
@@ -209,9 +213,26 @@ export function walletCardPayload(
     qrValue: url,
     hexBackgroundColor: bg,
     hexForegroundColor: walletForeground(bg),
+    accentHex: accent,
     heroImageUrl: walletImageUrl(p.avatarSrc, base),
     sovereignId,
   };
+}
+
+/** Static wallet artwork under <origin>/assets/wallet/. */
+export function walletAssetUrl(card: Pick<WalletCardPayload, "url">, file: string): string {
+  return new URL(`/assets/wallet/${file}`, card.url).href;
+}
+
+/** Card id in the hero URL: handle, or `u-<handle>` for alias cards. */
+export const walletCardId = (card: Pick<WalletCardPayload, "handle" | "space">) => `${card.space === "alias" ? "u-" : ""}${card.handle}`;
+
+/** Dynamic hero render; `v` changes with the Studio design so Google refetches it. */
+export function walletHeroUrl(card: Pick<WalletCardPayload, "url" | "handle" | "space" | "hexBackgroundColor" | "accentHex" | "displayName">): string {
+  const key = `${card.hexBackgroundColor}${card.accentHex}${card.displayName}`;
+  let h = 0;
+  for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
+  return new URL(`/api/wallet/render/${encodeURIComponent(walletCardId(card))}/hero.png?v=${h.toString(36)}`, card.url).href;
 }
 
 /** Google Generic object for a ROUT Card. */
@@ -222,7 +243,7 @@ export function googleCardObject(card: WalletCardPayload, issuerId: string, clas
     classId,
     state: "ACTIVE",
     hexBackgroundColor: card.hexBackgroundColor,
-    logo: { sourceUri: { uri: new URL("/icon-192.png", card.url).href }, contentDescription: i18n("ROUT") },
+    logo: { sourceUri: { uri: walletAssetUrl(card, "rout-logo.png") }, contentDescription: i18n("ROUT") },
     cardTitle: i18n("ROUT"),
     header: i18n(`@${card.handle}`),
     subheader: i18n(card.subheader),
@@ -235,9 +256,11 @@ export function googleCardObject(card: WalletCardPayload, issuerId: string, clas
       { id: "emergency", localizedHeader: walletText("emergency"), localizedBody: walletText("emergencyBody") },
     ],
     barcode: { type: "QR_CODE", value: card.qrValue, alternateText: clip(card.url.replace(/^https?:\/\//, ""), 60) },
-    ...(card.heroImageUrl
-      ? { heroImage: { sourceUri: { uri: card.heroImageUrl }, contentDescription: walletText("avatar") } }
-      : {}),
+    heroImage: { sourceUri: { uri: walletHeroUrl(card) }, contentDescription: i18n(`ROUT Card · ${card.displayName}`) },
+    imageModulesData: [
+      { id: "seal", mainImage: { sourceUri: { uri: walletAssetUrl(card, "sovereign-seal-pbr.png") }, contentDescription: i18n("ROUT Sovereign Seal") } },
+      { id: "compliance", mainImage: { sourceUri: { uri: walletAssetUrl(card, "compliance-array.png") }, contentDescription: i18n("ROUT Trust Array") } },
+    ],
     linksModuleData: { uris: [{ uri: card.url, localizedDescription: walletText("audit"), id: "open" }] },
   };
 }
@@ -249,10 +272,17 @@ export function googleCardSaveClaims(card: WalletCardPayload, cfg: { issuerId: s
     aud: "google",
     typ: "savetowallet",
     origins: cfg.origins,
-    payload: { genericClasses: [{ id: object.classId, classTemplateInfo: { cardTemplateOverride: { cardRowTemplateInfos: [{ twoItems: {
-      startItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['name']" }] } },
-      endItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['card']" }] } },
-    } }] } } }], genericObjects: [object] },
+    payload: { genericClasses: [{ id: object.classId, classTemplateInfo: { cardTemplateOverride: { cardRowTemplateInfos: [
+      { twoItems: {
+        startItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['name']" }] } },
+        endItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['card']" }] } },
+      } },
+      { oneItem: { item: { firstValue: { fields: [{ fieldPath: "object.textModulesData['authentication']" }] } } } },
+      { twoItems: {
+        startItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['sovereignty']" }] } },
+        endItem: { firstValue: { fields: [{ fieldPath: "object.textModulesData['emergency']" }] } },
+      } },
+    ] } } }], genericObjects: [object] },
   };
 }
 

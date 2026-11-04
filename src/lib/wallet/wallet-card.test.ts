@@ -32,17 +32,27 @@ describe("ROUT Card wallet payload", () => {
     const o = googleCardObject(root, "3388000000000000000");
     expect(o.classId).toBe("3388000000000000000.rout_card");
     expect(o.header.defaultValue.value).toBe("@jona");
-    expect(o.hexBackgroundColor).toBe("#0d0d0d");
+    // Neutral canvas is tinted with the accent: the closed pass is never flat grey.
+    expect(o.hexBackgroundColor).toBe("#216144");
     expect(o.barcode).toMatchObject({ type: "QR_CODE", value: "https://rout.be/@jona" });
-    expect(o.heroImage?.sourceUri.uri).toBe(root.heroImageUrl);
-    expect(o.logo.sourceUri.uri).toBe("https://rout.be/icon-192.png");
+    expect(o.heroImage.sourceUri.uri).toMatch(/^https:\/\/rout\.be\/api\/wallet\/render\/jona\/hero\.png\?v=/);
+    expect(o.logo.sourceUri.uri).toBe("https://rout.be/assets/wallet/rout-logo.png");
+    expect(o.imageModulesData.map((m) => m.mainImage.sourceUri.uri)).toEqual([
+      "https://rout.be/assets/wallet/sovereign-seal-pbr.png",
+      "https://rout.be/assets/wallet/compliance-array.png",
+    ]);
   });
 
   it("Apple pass shows the same QR and colours as Google", () => {
     const p = appleCardPassJson(root, { passTypeId: "pass.be.rout", teamId: "TEAM" });
     expect(p.barcodes[0]?.message).toBe(root.qrValue);
-    expect(p.backgroundColor).toBe("rgb(13, 13, 13)");
+    expect(p.backgroundColor).toBe("rgb(33, 97, 68)");
     expect(p.foregroundColor).toBe("rgb(255, 255, 255)");
+  });
+
+  it("keeps a coloured profile canvas as the pass colour", () => {
+    const c = walletCardPayload({ handle: "x", space: "root", displayName: null, tagline: null, themeBg: "#7026e1", avatarSrc: null }, base, "RT");
+    expect(c.hexBackgroundColor).toBe("#7026e1");
   });
 
   it("picks readable text colours and hash-based card numbers", () => {

@@ -76,7 +76,13 @@ export async function generateWalletPayload(
         space,
         displayName: (p["display_name"] as string | null) ?? null,
         tagline: (p["tagline"] as string | null) ?? null,
-        themeBg: themeOf(String(p["theme"] ?? "")).bg,
+        ...(await (async () => {
+          const { profileSurface } = await import("@/lib/profile-surface");
+          const { parseDisplayPrefs } = await import("@/lib/profile-display");
+          const prefs = parseDisplayPrefs(p["display_prefs"]);
+          const t = profileSurface(themeOf(String(p["theme"] ?? "")), prefs.canvasColor) as { bg: string; accent?: string };
+          return { themeBg: t.bg, accent: prefs.accentColor ?? t.accent ?? null };
+        })()),
         // Avatar paths start with the account id: the pass gets the sealed form.
         avatarSrc: profileImageSrc(await (await import("@/lib/auth/public-ref.server")).publicAvatarUrl(p["avatar_url"])),
       },
