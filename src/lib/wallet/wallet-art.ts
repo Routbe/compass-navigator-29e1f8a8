@@ -121,8 +121,8 @@ ${bunny(48, 36, 46, c.fg)}
 export function walletWideLogoSvg(): string {
   const w = 1280, h = 400;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${BRAND.ink}"/>
-${bunnyWithRings(220, h / 2, 150, BRAND.paper)}
-<text x="420" y="246" font-family="Inter, sans-serif" font-weight="600" font-size="150" letter-spacing="30" fill="${BRAND.paper}">ROUT</text></svg>`;
+${bunnyWithRings(390, h / 2, 150, BRAND.paper)}
+<text x="590" y="246" font-family="Inter, sans-serif" font-weight="600" font-size="150" letter-spacing="30" fill="${BRAND.paper}">ROUT</text></svg>`;
 }
 
 /** Brand hero (1032×336): generic class-level hero showing a ROUT Card without personal data. */
