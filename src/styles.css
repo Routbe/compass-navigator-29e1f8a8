@@ -1864,3 +1864,6 @@ html[data-liquid] [style*="--lg-filter"] { backdrop-filter: var(--lg-filter) !im
   .story-card-copy { position: static; width: auto; padding: 26px 4px 0; }
   .story-card-copy h3 { font-size: 30px; }
 }
+@media (min-width: 640px) and (max-width: 1023px) {
+  .story-card-copy { position: static; width: auto; padding: 28px 4px 0; }
+}
