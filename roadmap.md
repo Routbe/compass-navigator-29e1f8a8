@@ -42,3 +42,10 @@
 - [x] New pages: /about/platform, /about/rout-card, /info/sign-in-with-rout, /info/human-verification, /info/payment-pages, /info/integrations, /info/links-and-analytics; press subpages /press/wallet and /press/previews.
 - [x] Docs tables now render (GFM) across all help pages.
 - [ ] Translate new help pages to EN/FR/DE (catalog is Dutch-only today).
+
+## Studio & Command Center (Nov 4)
+- [x] Profile header order: name, @handle (@x / @u/x / @w/x), location, bio, then link icons and the rest.
+- [x] Links as bars, icons under bio, or both (Vormgeving → Knopvorm); widgets/forms never turn into pills.
+- [x] Command Center: customizable board (add/remove, drag/reorder, width 1–4, height) + visitor and new-member widgets.
+- [ ] Studio "Widgets" folder (Anonymous Inbox, Prikbord, Badges, visitors) with per-widget width/height.
+- [ ] Layer Studio rework: clearer, logical presets and per-field placement.
