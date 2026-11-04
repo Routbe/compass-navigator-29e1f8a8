@@ -25,3 +25,13 @@
 - [ ] Authenticated Studio/popover/card end-to-end verification: blocked by absent account signing configuration and no available signed-in session.
 - [ ] Switch Neon to dedicated rout_app role: connection currently uses neondb_owner; the connection owner must supply the restricted role through the secure connection settings, no database privileges changed.
 - [x] Verify global cursor coordinates and public layouts on desktop/phone; focused tests and build checks passed.
+
+## Google Wallet upgrade (Nov 4)
+- [x] Link Neon database (My Neon) — 181 tables present.
+- [x] Pass in profile colour (neutral canvases tinted with accent), official ROUT logo, seal + trust-array images, live hero card render at /api/wallet/render/<card>/hero.png, 3-row layout.
+- [ ] Move Wallet buttons higher in the ROUT Card dialog.
+- [ ] Google Wallet secrets (issuer id + service account) — waiting on user.
+
+## Homepage & UI (Nov 4 request)
+- [ ] Homepage rebuild: Neon.com-length long scroll, full-width image per chapter, scroll animations, tell everything ROUT does (login, cards, human/identity verification, pay pages, integrations, QR generator, links/analytics like Bitly/QRCG/QRCodeMonkey); card image lower and higher quality.
+- [ ] Re-audit every button/frame/control in every folder to the chosen ROUT UI style.
