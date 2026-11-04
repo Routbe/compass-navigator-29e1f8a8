@@ -137,7 +137,7 @@ export function walletCardModuleSvg(): string {
   const list = rows.map(([k, v], i) => `<circle cx="1040" cy="${232 + i * 120}" r="10" fill="${i % 2 ? BRAND.purple : BRAND.mint}"/>
 <text x="1072" y="${242 + i * 120}" font-family="Inter, sans-serif" font-weight="600" font-size="40" fill="${BRAND.paper}">${k}</text>
 <text x="1072" y="${284 + i * 120}" font-family="Inter, sans-serif" font-size="26" fill="${BRAND.paper}" opacity="0.62">${v}</text>`).join("");
-  const card = walletHeroSvg({ displayName: "ROUT Card", handle: "rout", sovereignId: "SOVEREIGN · EU", bg: "#1b1530", accent: BRAND.mint, fg: BRAND.paper, space: "root" }).replace("<svg ", `<svg x="80" y="142" width="860" height="280" `);
+  const card = walletHeroSvg({ displayName: "ROUT Card", handle: "rout", sovereignId: "SOVEREIGN · EU", bg: "#1b1530", accent: BRAND.mint, fg: BRAND.paper, space: "root" }).replace(/^<svg [^>]*?width="\d+" height="\d+"/, `<svg xmlns="http://www.w3.org/2000/svg" x="80" y="142" width="860" height="280"`);
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${BRAND.ink}"/>${guilloche(w, h, BRAND.purple, 0.07)}
 <text x="80" y="96" font-family="Inter, sans-serif" font-weight="600" font-size="30" letter-spacing="8" fill="${BRAND.mint}">ROUT CARD · THREE LAYERS</text>
 ${card}${list}</svg>`;
