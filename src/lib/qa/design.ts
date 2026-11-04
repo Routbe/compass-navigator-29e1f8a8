@@ -17,8 +17,8 @@ export function qaDesign(raw: unknown, scope: ComponentScope, surface: { card: s
 }
 
 /** Forms and widgets can never become pills: a 999px radius clips their fields and buttons. */
-export function clampWidgetRadius<T extends { borderRadius?: unknown }>(style: T): T {
-  const r = style.borderRadius;
+export function clampWidgetRadius<T extends object>(style: T): T {
+  const r = (style as { borderRadius?: unknown }).borderRadius;
   const px = typeof r === "number" ? r : typeof r === "string" ? parseFloat(r) : NaN;
   return Number.isFinite(px) && px > 28 ? { ...style, borderRadius: 28 } : style;
 }
