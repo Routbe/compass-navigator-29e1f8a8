@@ -7,6 +7,7 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import mdx from "@mdx-js/rollup";
 import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -39,7 +40,7 @@ const docsCatalogPlugin: Plugin = {
 export default defineConfig({
   // External Vercel releases are explicit; Lovable retains its managed target.
   nitro: process.env["VERCEL"] === "1" ? { preset: "vercel" } : undefined,
-  vite: { plugins: [docsCatalogPlugin, mdx({ include: /\.mdx$/, providerImportSource: "@mdx-js/react", remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter] })] },
+  vite: { plugins: [docsCatalogPlugin, mdx({ include: /\.mdx$/, providerImportSource: "@mdx-js/react", remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm] })] },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
