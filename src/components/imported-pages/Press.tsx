@@ -3,6 +3,7 @@ import { Check, Copy, Download, Loader2, Mail } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppLayout } from "@/components/layout/AppLayout";
+import { PressNav } from "@/components/press/PressSubpage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -89,7 +90,7 @@ const BOILERPLATE = {
   short:
     "ROUT is een Europese, soevereine identiteits- en QR-infrastructuur. Mensen en bedrijven krijgen één geverifieerd profiel, inloggen zonder wachtwoord en dynamische QR-codes — gehost in de EU, zonder datahandel.",
   long:
-    "ROUT (rout.be) bouwt digitale identiteit die van de gebruiker zelf blijft. Leden krijgen een eigen profielpagina met schone URL, een geverifieerde badge voor personen, influencers en bedrijven, en een privacy-alias die hun e-mailadres afschermt. Via \"Login met ROUT\" kunnen apps en partners leden veilig laten inloggen op basis van open standaarden (OpenID Connect), met expliciete toestemming per gegeven. Daarnaast levert ROUT dynamische en statische QR-codes, batchgeneratie en eigen domeinen. Alle data staat op Europese infrastructuur; ROUT verkoopt geen gebruikersgegevens en toont geen advertenties.",
+    "ROUT (rout.be) bouwt digitale identiteit die van de gebruiker zelf blijft. Leden krijgen een eigen profielpagina met schone URL, een geverifieerde badge voor personen, influencers en bedrijven, en een privacy-alias die hun e-mailadres afschermt. Via \"Login met ROUT\" kunnen apps en partners leden veilig laten inloggen op basis van open standaarden (OpenID Connect), met expliciete toestemming per gegeven. Daarnaast levert ROUT dynamische en statische QR-codes, korte links met cookieloze statistieken, batchgeneratie en eigen domeinen; de ROUT Card als fysieke kaart en Wallet-pas met drie scanlagen; fooi- en betaalpagina's waarbij het geld rechtstreeks naar de maker gaat; en een Connections Hub voor sociale accounts en integraties. Alle data staat op Europese infrastructuur; ROUT verkoopt geen gebruikersgegevens en toont geen advertenties.",
 };
 
 function CopyButton({ value, label }: { value: string; label: string }) {
@@ -207,6 +208,7 @@ export default function Press() {
           Officiële logo's, kleuren en een standaardtekst over ROUT. Vrij te gebruiken in
           berichtgeving over ROUT — vervorm of herkleur het logo niet.
         </p>
+        <PressNav />
 
         <section className="mt-14" aria-labelledby="assets">
           <h2 id="assets" className="font-display text-2xl text-foreground">Logo's</h2>

@@ -160,6 +160,8 @@ import { Route as InfoWalletRouteImport } from './routes/info.wallet'
 import { Route as KaartTokenRouteImport } from './routes/kaart.$token'
 import { Route as OauthAuthorizeRouteImport } from './routes/oauth.authorize'
 import { Route as OauthEndSessionRouteImport } from './routes/oauth.end-session'
+import { Route as PressPreviewsRouteImport } from './routes/press_.previews'
+import { Route as PressWalletRouteImport } from './routes/press_.wallet'
 import { Route as ProductIndexRouteImport } from './routes/product.index'
 import { Route as ProductBatchEngineRouteImport } from './routes/product.batch-engine'
 import { Route as ProductCustomDomainsRouteImport } from './routes/product.custom-domains'
@@ -1148,6 +1150,16 @@ const OauthAuthorizeRoute = OauthAuthorizeRouteImport.update({
 const OauthEndSessionRoute = OauthEndSessionRouteImport.update({
   id: '/oauth/end-session',
   path: '/oauth/end-session',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PressPreviewsRoute = PressPreviewsRouteImport.update({
+  id: '/press_/previews',
+  path: '/press/previews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PressWalletRoute = PressWalletRouteImport.update({
+  id: '/press_/wallet',
+  path: '/press/wallet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductIndexRoute = ProductIndexRouteImport.update({
@@ -2558,6 +2570,8 @@ export interface FileRoutesByFullPath {
   '/kaart/$token': typeof KaartTokenRoute
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/oauth/end-session': typeof OauthEndSessionRoute
+  '/press/previews': typeof PressPreviewsRoute
+  '/press/wallet': typeof PressWalletRoute
   '/product/batch-engine': typeof ProductBatchEngineRoute
   '/product/custom-domains': typeof ProductCustomDomainsRoute
   '/product/dynamic-links': typeof ProductDynamicLinksRoute
@@ -2927,6 +2941,8 @@ export interface FileRoutesByTo {
   '/kaart/$token': typeof KaartTokenRoute
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/oauth/end-session': typeof OauthEndSessionRoute
+  '/press/previews': typeof PressPreviewsRoute
+  '/press/wallet': typeof PressWalletRoute
   '/product/batch-engine': typeof ProductBatchEngineRoute
   '/product/custom-domains': typeof ProductCustomDomainsRoute
   '/product/dynamic-links': typeof ProductDynamicLinksRoute
@@ -3309,6 +3325,8 @@ export interface FileRoutesById {
   '/kaart/$token': typeof KaartTokenRoute
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/oauth/end-session': typeof OauthEndSessionRoute
+  '/press_/previews': typeof PressPreviewsRoute
+  '/press_/wallet': typeof PressWalletRoute
   '/product/batch-engine': typeof ProductBatchEngineRoute
   '/product/custom-domains': typeof ProductCustomDomainsRoute
   '/product/dynamic-links': typeof ProductDynamicLinksRoute
@@ -3694,6 +3712,8 @@ export interface FileRouteTypes {
     | '/kaart/$token'
     | '/oauth/authorize'
     | '/oauth/end-session'
+    | '/press/previews'
+    | '/press/wallet'
     | '/product/batch-engine'
     | '/product/custom-domains'
     | '/product/dynamic-links'
@@ -4063,6 +4083,8 @@ export interface FileRouteTypes {
     | '/kaart/$token'
     | '/oauth/authorize'
     | '/oauth/end-session'
+    | '/press/previews'
+    | '/press/wallet'
     | '/product/batch-engine'
     | '/product/custom-domains'
     | '/product/dynamic-links'
@@ -4444,6 +4466,8 @@ export interface FileRouteTypes {
     | '/kaart/$token'
     | '/oauth/authorize'
     | '/oauth/end-session'
+    | '/press_/previews'
+    | '/press_/wallet'
     | '/product/batch-engine'
     | '/product/custom-domains'
     | '/product/dynamic-links'
@@ -4775,6 +4799,8 @@ export interface RootRouteChildren {
   KaartTokenRoute: typeof KaartTokenRoute
   OauthAuthorizeRoute: typeof OauthAuthorizeRoute
   OauthEndSessionRoute: typeof OauthEndSessionRoute
+  PressPreviewsRoute: typeof PressPreviewsRoute
+  PressWalletRoute: typeof PressWalletRoute
   QrPaymentRoute: typeof QrPaymentRouteWithChildren
   RUsernameRoute: typeof RUsernameRoute
   ReviewTokenRoute: typeof ReviewTokenRoute
@@ -5950,6 +5976,20 @@ declare module '@tanstack/react-router' {
       path: '/oauth/end-session'
       fullPath: '/oauth/end-session'
       preLoaderRoute: typeof OauthEndSessionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/press_/previews': {
+      id: '/press_/previews'
+      path: '/press/previews'
+      fullPath: '/press/previews'
+      preLoaderRoute: typeof PressPreviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/press_/wallet': {
+      id: '/press_/wallet'
+      path: '/press/wallet'
+      fullPath: '/press/wallet'
+      preLoaderRoute: typeof PressWalletRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/product/': {
@@ -8238,6 +8278,8 @@ const rootRouteChildren: RootRouteChildren = {
   KaartTokenRoute: KaartTokenRoute,
   OauthAuthorizeRoute: OauthAuthorizeRoute,
   OauthEndSessionRoute: OauthEndSessionRoute,
+  PressPreviewsRoute: PressPreviewsRoute,
+  PressWalletRoute: PressWalletRoute,
   QrPaymentRoute: QrPaymentRouteWithChildren,
   RUsernameRoute: RUsernameRoute,
   ReviewTokenRoute: ReviewTokenRoute,
