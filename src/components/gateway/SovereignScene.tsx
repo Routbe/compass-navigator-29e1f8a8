@@ -56,7 +56,7 @@ const rimVertex = `varying vec3 n;varying vec3 v;void main(){vec4 mv=modelViewMa
 const rimFragment = `uniform vec3 emerald;varying vec3 n;varying vec3 v;void main(){float r=pow(1.-max(dot(n,v),0.),3.2);gl_FragColor=vec4(emerald,r*.55);}`;
 const arcVertex = `attribute float t;varying float vt;void main(){vt=t;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`;
 const arcFragment = `uniform float time;uniform float offset;uniform vec3 cyan;varying float vt;
-void main(){float p=fract(time*.18+offset);float head=smoothstep(p-.16,p,vt)*step(vt,p);gl_FragColor=vec4(cyan,.1+head*.9);}`;
+void main(){float p=fract(time*.18+offset);float head=smoothstep(p-.16,p,vt)*step(vt,p);gl_FragColor=vec4(cyan,.28+head);}`;
 
 const R = 2.6;
 function toVec(lat: number, lng: number, r = R) {
